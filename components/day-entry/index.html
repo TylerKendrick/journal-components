@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Day Entry</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'" />
+    <script type="module">
+        console.log("Loading day-entry");
+        import { LitElement, html } from "https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js";
+
+        class DayEntry extends LitElement {
+            constructor(day) {
+                super();
+                const currentDate = new Date();
+                this.day = day || currentDate.getDate();
+            }
+
+            render() {
+                const day = this.day;
+                return html`
+                    <div class="day-entry">
+                        <button>&lt;</button>
+                        <button>${day}</button>
+                        <button>&gt;</button>
+                    </div>
+                `;
+            }
+        }
+
+        class MonthEntry extends LitElement {
+            months = [
+                "January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"
+            ];
+            constructor(currentMonth) {
+                super();
+                const currentDate = new Date();
+                currentMonth = currentMonth || currentDate.getMonth();
+                this.month = this.months[7];
+            }
+
+            render() {
+                const month = this.months[this.month];
+                return html`
+                    <div class="month-entry">
+                        <button>&lt;</button>
+                        <button>${month}</button>
+                        <button>&gt;</button>
+                    </div>
+                `;
+            }
+        }
+
+        class YearEntry extends LitElement {
+            constructor(year) {
+                super();
+                const currentDate = new Date();
+                this.year = year || currentDate.getFullYear();
+            }
+
+            render() {
+                const year = this.year;
+                return html`
+                    <div class="year-entry">
+                        <button>&lt;</button>
+                        <button>${year}</button>
+                        <button>&gt;</button>
+                    </div>
+                `;
+            }
+        }
+
+        class DateEntry extends LitElement {
+            //@property year;
+            constructor(date) {
+                super();
+                const currentDate = date || new Date();
+                this.year = currentDate.getFullYear();
+                this.month = currentDate.getMonth();
+                this.day = currentDate.getDate();
+            }
+
+            render() {
+                const { year, month, day } = this;
+                return html`
+                <div class="date-entry">
+                    <year-entry .year=${year}></year-entry>
+                    <month-entry .month=${month}></month-entry>
+                    <day-entry .day=${day}></day-entry>
+                </div>`;
+            }
+        }
+
+        //todo: make a minute entry component
+        class MinuteEntry extends LitElement {
+            constructor(minutes) {
+                super();
+                this.minute = minutes;
+            }
+
+            render() {
+                return html`
+                <div class="minute-entry">
+                    <button>&lt;</button>
+                    <button>${this.minute}</button>
+                    <button>&gt;</button>
+                </div>
+                `;
+            }
+        }
+
+        class SecondEntry extends LitElement {
+            constructor(seconds) {
+                super();
+                this.second = seconds;
+            }
+
+            render() {
+                return html`
+                <div class="second-entry">
+                    <button>&lt;</button>
+                    <button>${this.second}</button>
+                    <button>&gt;</button>
+                </div>
+                `;
+            }
+        }
+        
+        class HourEntry extends LitElement {
+            constructor(hours) {
+                super();
+                this.hour = hours;
+            }
+
+            render() {
+                return html`
+                <div class="hour-entry">
+                    <button>&lt;</button>
+                    <button>${this.hour}</button>
+                    <button>&gt;</button>
+                </div>
+                `;
+            }
+        }
+
+        class TimeEntry extends LitElement {
+            constructor(time) {
+                super();
+                const currentTime = time || new Date();
+                this.hour = currentTime.getHours();
+                this.minute = currentTime.getMinutes();
+                this.second = currentTime.getSeconds();
+            }
+
+            render() {
+                return html`
+                <div class="time-entry">
+                    <hour-entry .hour=${this.hour}></hour-entry>
+                    <minute-entry .minute=${this.minute}></minute-entry>
+                    <second-entry .second=${this.second}></second-entry>
+                </div>
+                `;
+            }
+        }
+
+        //todo: create datetimeentry component
+        class DateTimeEntry extends LitElement {
+            constructor(date) {
+                super();
+                const currentDate = date || new Date();
+                this.year = currentDate.getFullYear();
+                this.month = currentDate.getMonth();
+                this.day = currentDate.getDate();
+                this.hour = currentDate.getHours();
+                this.minute = currentDate.getMinutes();
+                this.second = currentDate.getSeconds();
+            }
+
+            render() {
+                return html`
+                <div class="date-time-entry">
+                    <date-entry .year=${this.year} .month=${this.month} .day=${this.day}></date-entry>
+                    <time-entry .hour=${this.hour} .minute=${this.minute} .second=${this.second}></time-entry>
+                </div>
+                `;
+            }
+        }
+
+        customElements.define('hour-entry', HourEntry);
+        customElements.define('second-entry', SecondEntry);
+        customElements.define('minute-entry', MinuteEntry);
+        customElements.define('time-entry', TimeEntry);
+        customElements.define('date-entry', DateEntry);
+        customElements.define('year-entry', YearEntry);
+        customElements.define('month-entry', MonthEntry);
+        customElements.define('day-entry', DayEntry);
+    </script>
+</head>
+
+<body>
+    <date-entry></date-entry>
+</body>
+
+</html>
